@@ -28,17 +28,20 @@
     ],
     "require": {
         "php": ">=7.0.0",
+        "careset/caresetreportasadvancedd3graph": "dev-master",
+        "careset/caresetreportaslegacyd3graph": "dev-master",
+        "careset/caresetreportassigmagraph": "dev-master",
+        "careset/caresetreportastable": "dev-master",
+        "careset/caresetreportengine": "dev-master",
+	"careset/durc": "@dev",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
         "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
+        "nesbot/carbon": "^1.22",
         "proai/laravel-handlebars": "^1.7",
-        "tymon/jwt-auth": "^0.5.12",
-        "careset/caresetreportengine": "dev-master",
-        "careset/caresetreportasadvancedd3graph": "dev-master",
-        "careset/caresetreportassigmagraph": "dev-master",
-        "careset/caresetreportaslegacyd3graph": "dev-master",
-        "careset/caresetreportastable": "dev-master"
+        "spatie/laravel-tail": "^2.0",
+        "tymon/jwt-auth": "^0.5.12"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
