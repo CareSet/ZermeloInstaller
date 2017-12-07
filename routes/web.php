@@ -14,3 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/mockup',function () {
+        $content = view('dashboard');
+        $test_data = ['dashboard_mockup' => $content];
+        return view('main_html',$test_data);
+});
