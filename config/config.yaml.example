@@ -1,0 +1,4 @@
+mysql_host: localhost
+mysql_user: user
+mysql_password: 'randomly_generated_please'
+mysql_database: whatever_you_like
