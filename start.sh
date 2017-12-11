@@ -4,5 +4,5 @@ if ! [ -x "$(command -v composer)" ]; then
   exit 1
 fi
 cp .env.example .env
-php artisan key:generate
 composer update
+php artisan key:generate
