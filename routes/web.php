@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 
 Route::get('/mockup',function () {
-        $content = view('dashboard');
-        $test_data = ['dashboard_mockup' => $content];
+        $content = view('dashboard_mockup');
+        $test_data = ['content' => $content];
         return view('main_html',$test_data);
 });
