@@ -24,6 +24,10 @@
         {
             "type": "vcs",
             "url": "git@github.com:CareSet/CareSetReportAsTable.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:CareSet/CareSetJWTAuthClient.git"
         }
     ],
     "require": {
@@ -33,6 +37,7 @@
         "careset/caresetreportassigmagraph": "dev-master",
         "careset/caresetreportastable": "dev-master",
         "careset/caresetreportengine": "dev-master",
+        "careset/caresetjwtauthclient": "dev-master",
 	"careset/durc": "@dev",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",

@@ -21,3 +21,14 @@ Route::get('/mockup',function () {
         $test_data = ['content' => $content];
         return view('main_html',$test_data);
 });
+
+
+Route::middleware([\CareSet\CareSetJWTAuthClient\Middleware\JWTClientMiddleware::class])->group(function () {
+
+	Route::get('/test',function() {
+
+		return 'Hello World!';
+
+	});
+
+});
