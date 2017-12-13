@@ -180,6 +180,9 @@ return [
 	// Load the handlebars
         ProAI\Handlebars\HandlebarsServiceProvider::class,
 
+	// console web interfaces
+	    Recca0120\Terminal\TerminalServiceProvider::class,
+
 	// load DURC
         CareSet\DURC\DURCServiceProvider::class,
 

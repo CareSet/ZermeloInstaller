@@ -29,6 +29,8 @@ nbproject
 # Laravel 5.5 defaults
 /node_modules
 /public/hot
+/public/vendor
+/resources/views/vendor
 /public/storage
 /storage/*.key
 /vendor

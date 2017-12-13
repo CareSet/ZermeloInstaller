@@ -32,13 +32,13 @@
     ],
     "require": {
         "php": ">=7.0.0",
+        "careset/caresetjwtauthclient": "dev-master",
         "careset/caresetreportasadvancedd3graph": "dev-master",
         "careset/caresetreportaslegacyd3graph": "dev-master",
         "careset/caresetreportassigmagraph": "dev-master",
         "careset/caresetreportastable": "dev-master",
         "careset/caresetreportengine": "dev-master",
-        "careset/caresetjwtauthclient": "dev-master",
-	"careset/durc": "@dev",
+        "careset/durc": "@dev",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
         "laravel/socialite": "^3.0",
@@ -46,7 +46,9 @@
         "nesbot/carbon": "^1.22",
         "proai/laravel-handlebars": "^1.7",
         "spatie/laravel-tail": "^2.0",
-        "tymon/jwt-auth": "^0.5.12"
+        "studio/laravel-totem": "^2.2",
+        "tymon/jwt-auth": "^0.5.12",
+	"recca0120/terminal": "^1.6.8"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
