@@ -8,7 +8,7 @@ return [
         'as' => 'terminal.',
     ],
     'interpreters' => [
-        'mysql' => 'mysql',
+//        'mysql' => 'mysql',
         'artisan tinker' => 'tinker',
         'tinker' => 'tinker',
     ],
@@ -20,6 +20,7 @@ return [
             'migrate:reset',
             'migrate:rollback',
             'db:seed',
+		'DURC:mine',
         ],
     ],
     'commands' => [
@@ -28,7 +29,7 @@ return [
         \Recca0120\Terminal\Console\Commands\Cleanup::class,
         \Recca0120\Terminal\Console\Commands\Composer::class,
         \Recca0120\Terminal\Console\Commands\Find::class,
-        \Recca0120\Terminal\Console\Commands\Mysql::class,
+//        \Recca0120\Terminal\Console\Commands\Mysql::class,
         \Recca0120\Terminal\Console\Commands\Tail::class,
         \Recca0120\Terminal\Console\Commands\Vi::class,
     ],

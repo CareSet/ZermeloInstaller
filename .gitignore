@@ -27,6 +27,7 @@ nbproject
 *.sass-cache
 
 # Laravel 5.5 defaults
+/bootstrap/cache
 /node_modules
 /public/hot
 /public/vendor
