@@ -44,6 +44,7 @@
         "laravel/framework": "5.5.*",
         "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
+        "laravelcollective/html": "^5.4.0",
         "nesbot/carbon": "^1.22",
         "proai/laravel-handlebars": "^1.7",
         "spatie/laravel-tail": "^2.0",
