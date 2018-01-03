@@ -40,7 +40,6 @@
         "careset/caresetreportastable": "dev-master",
         "careset/caresetreportengine": "dev-master",
         "careset/durc": "@dev",
-        "careset/caresetjwtauthclient": "dev-master",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
         "laravel/socialite": "^3.0",
