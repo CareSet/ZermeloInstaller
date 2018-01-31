@@ -49,7 +49,8 @@
         "proai/laravel-handlebars": "^1.7",
         "spatie/laravel-tail": "^2.0",
         "studio/laravel-totem": "^2.2",
-        "tymon/jwt-auth": "^0.5.12"
+        "tymon/jwt-auth": "^0.5.12",
+        "vlucas/phpdotenv": "^2.4.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
