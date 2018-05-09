@@ -1,0 +1,12 @@
+#!/usr/bin/php
+<?php
+
+	$file_name = $argv[1];
+
+	$md5 = md5_file($file_name);
+	$cmd = "mv $file_name $file_name.$md5";
+	echo "running $cmd..";
+	system($cmd);
+	echo "done.\n";
+
+
