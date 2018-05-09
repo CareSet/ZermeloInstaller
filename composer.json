@@ -41,17 +41,18 @@
         "careset/caresetreportengine": "dev-master",
         "careset/durc": "dev-master",
         "fideloper/proxy": "~3.3",
+        "google/cloud-datastore": "^1.5",
         "laravel/framework": "5.5.*",
         "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4.0",
         "nesbot/carbon": "^1.22",
         "proai/laravel-handlebars": "^1.7",
+        "smartystreets/phpsdk": "^4.2.0",
         "spatie/laravel-tail": "^2.0",
         "studio/laravel-totem": "^2.2",
         "tymon/jwt-auth": "^0.5.12",
-        "vlucas/phpdotenv": "^2.4.0",
-        "smartystreets/phpsdk": "^4.2.0"
+        "vlucas/phpdotenv": "^2.4.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
