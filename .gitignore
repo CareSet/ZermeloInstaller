@@ -3,6 +3,10 @@
 *.yaml
 notgit/
 
+#ignore log files
+/log/*.txt
+/log/*.log
+
 #cruft blocks
 .DS_Store
 Thumbs.db
