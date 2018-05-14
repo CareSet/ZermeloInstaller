@@ -26,3 +26,6 @@ Next, get encryption working on your system following the letsencrypt [certbot](
 After that, you need follow the instructions for getting a new app registered with the auth server, downloading the corresponding credentials, and then protecting parts of your interace with the authentication system. 
 
 You need to read the contents of the [Auth](https://github.com/CareSet/AuthenticationServer) for those instructions. 
+
+## Logout
+To logout, redirect the url to /auth/cs/logout, this will call the JWTAuthClient to logout of the AuthServer
