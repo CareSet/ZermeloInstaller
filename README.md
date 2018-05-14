@@ -28,4 +28,4 @@ After that, you need follow the instructions for getting a new app registered wi
 You need to read the contents of the [Auth](https://github.com/CareSet/AuthenticationServer) for those instructions. 
 
 ## Logout
-To logout, redirect the url to /auth/cs/logout, this will call the JWTAuthClient to logout of the AuthServer
+To logout, redirect the url to `/auth/cs/logout`, this will call the JWTAuthClient to logout of the AuthServer
