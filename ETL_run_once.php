@@ -4,6 +4,12 @@
 		For ETL projects. run.php is the starting point for the ETL process.
 		Erase this file if you are not creating an ETL step project.
 		This template assumes that you just need to run a bunch of sql commands...
+		
+		
+		Note, that all required tables for running an ETL on a clean server (with a mysql server with nothing installed)  
+		Should be listed here... 
+		
+		So there should be a bunch of "CREATE TABLE" stuff here..
 
 	*/
 
