@@ -83,7 +83,11 @@ if($argv[0] == basename(__FILE__)){
 		$result = f_mysql_query($check_sql);
 		$row = mysqli_fetch_assoc($result);
 		if(isset($row['id'])){
-			return($row['id']);
+			$number_id = $row['id'];
+			//make sure both tables have the map.
+			$insert_raw_sql = "REPLACE INTO address.rawnumber (`rawnumber`, `number_id`) VALUES ('$e_input_number','$number_id');";
+			f_mysql_query($insert_raw_sql);
+			return($number_id);
 		}
 
 		//ok, this is a messy number, lets see if it is already mapped
