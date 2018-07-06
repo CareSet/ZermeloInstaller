@@ -45,7 +45,11 @@ if($argv[0] == basename(__FILE__)){
 
 		$result = f_mysql_query($update_sql);
 
-        	$sql = "SELECT * FROM address.rawnumber WHERE number_id IS NULL";
+        	$sql = "
+SELECT * FROM address.rawnumber 
+WHERE number_id IS NULL
+ORDER BY rawnumber DESC
+";
 
         	$result = f_mysql_query($sql);
 
