@@ -6,8 +6,8 @@
 
 
         if(!isset($argv[1])){
-		
-                echo "Usage: Step10_REPLACEME.php {target_db} \n";
+		$this_file = __FILE__;		
+                echo "Usage: $this_file {target_db} \n";
                 exit();
         }
 
