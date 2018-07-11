@@ -37,9 +37,10 @@
         "careset/caresetreportasadvancedd3graph": "dev-master",
         "careset/caresetreportaslegacyd3graph": "dev-master",
         "careset/caresetreportassigmagraph": "dev-master",
-        "careset/caresetreportastable": "dev-master",
-        "careset/caresetreportengine": "dev-master",
         "careset/durc": "dev-master",
+        "careset/zermelo": "dev-master",
+        "careset/zermeloviewblade": "dev-master",
+        "careset/zermeloviewvuejs": "dev-master",
         "fideloper/proxy": "~3.3",
         "google/cloud-datastore": "^1.5",
         "laravel/framework": "5.5.*",
@@ -52,7 +53,7 @@
         "spatie/laravel-tail": "^2.0",
         "studio/laravel-totem": "^2.2",
         "tymon/jwt-auth": "^0.5.12",
-        "vlucas/phpdotenv": "^2.4.0"
+        "vlucas/phpdotenv": "^2.4"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
