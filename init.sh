@@ -18,7 +18,7 @@ fi
 sudo -u $real_user composer update
 sudo -u $real_user cp .env.example .env 
 sudo -u $real_user php artisan key:generate
-sudo echo "I will update this README soon." > README.md
+cp ./templates/ReadMe.template.md README.md
 
 #these commands are the reason that we insist on running with sudo
 chmod 0777 storage -R
