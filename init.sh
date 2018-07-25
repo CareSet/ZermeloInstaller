@@ -1,7 +1,4 @@
 #!/bin/bash
-#composer update
-#cp .env.example .env
-#php artisan key:generate
 
 if ! [ $(id -u) = 0 ]; then
    echo "The script need to be run using sudo!" >&2
@@ -13,6 +10,11 @@ if [ $SUDO_USER ]; then
 else
     real_user=$(whoami)
 fi
+
+composer update
+cp .env.example .env
+php artisan key:generate
+
 
 #these commands need to run as the regular user...
 sudo -u $real_user composer update
