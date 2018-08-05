@@ -7,26 +7,6 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@github.com:CareSet/CareSetReportEngine.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:CareSet/CareSetReportAsAdvancedD3Graph.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:CareSet/CareSetReportAsSigmaGraph.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:CareSet/CareSetReportAsLegacyD3Graph.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:CareSet/CareSetReportAsTable.git"
-        },
-        {
-            "type": "vcs",
             "url": "git@github.com:CareSet/CareSetJWTAuthClient.git"
         }
     ],
@@ -34,13 +14,8 @@
         "php": ">=7.0.0",
         "bestmomo/nice-artisan": "^1.1",
         "careset/caresetjwtauthclient": "dev-master",
-        "careset/caresetreportasadvancedd3graph": "dev-master",
-        "careset/caresetreportaslegacyd3graph": "dev-master",
-        "careset/caresetreportassigmagraph": "dev-master",
         "careset/durc": "dev-master",
         "careset/zermelo": "dev-master",
-        "careset/zermeloviewblade": "dev-master",
-        "careset/zermeloviewvuejs": "dev-master",
         "fideloper/proxy": "~3.3",
         "google/cloud-datastore": "^1.5",
         "laravel/framework": "5.5.*",
