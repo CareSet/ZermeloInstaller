@@ -6,7 +6,7 @@
 	it be order indexed or label indexed...
 	This function will run all of the sql commands, while echoing them to the terminal
 */
-function run_sql_loop($sql, $start_time = null){ 	
+function run_sql_loop($sql, $is_echo_full_sql = false,  $start_time = null){ 	
 
 	if(is_null($start_time)){
 		$start_time = microtime(true);
@@ -16,7 +16,6 @@ function run_sql_loop($sql, $start_time = null){
 
 	$current_step = 1;
 
-	$is_echo_full_sql = false;
 	foreach($sql as $comment => $this_sql){
 		$this_sql = trim($this_sql);
 		if(strlen($this_sql) > 0){

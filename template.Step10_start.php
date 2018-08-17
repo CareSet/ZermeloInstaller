@@ -21,8 +21,8 @@
 	$sql[] = "ENTER your SQL commands here... you do not need to use an index...";
 	$sql['comments are good, use them!!'] = "ENTER your SQL commands here...";
 
-
-	run_sql_loop($sql,$start_time);
+	$is_echo_sql = true;
+	run_sql_loop($sql,$is_echo_sql,$start_time);
 
 
 
