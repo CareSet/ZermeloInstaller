@@ -14,12 +14,9 @@
         "php": ">=7.0.0",
         "bestmomo/nice-artisan": "^1.1",
         "careset/caresetjwtauthclient": "dev-master",
-        "careset/durc": "dev-master",
-        "careset/zermelo": "dev-master",
-        "careset/zermelobladecard": "dev-master",
-        "careset/zermelobladetabular": "dev-master",
         "fideloper/proxy": "~3.3",
         "google/cloud-datastore": "^1.5",
+        "google/cloud-storage": "^1.7",
         "laravel/framework": "5.5.*",
         "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
@@ -34,6 +31,10 @@
         "vlucas/phpdotenv": "^2.4"
     },
     "require-dev": {
+        "careset/durc": "dev-master",
+        "careset/zermelo": "dev-master",
+        "careset/zermelobladecard": "dev-master",
+        "careset/zermelobladetabular": "dev-master",
         "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "~1.0"
