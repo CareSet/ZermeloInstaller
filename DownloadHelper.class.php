@@ -4,6 +4,12 @@ require_once('vendor/autoload.php');
 use CedricZiel\FlysystemGcs\GoogleCloudStorageAdapter;
 use League\Flysystem\Filesystem;
 
+
+	//TODO, this system should be smart enough to detect a missing bucket and create it dynamically (as nearline class storage) 
+	//So that you did not need to create a new bucket on https://console.cloud.google.com/storage/browser/ 
+	//which is required to use this now..
+
+
 	// a couple of low level helpers for downloading stuff..
 	//made into functions on an object that understands how to work with google files
 class DownloadHelper {
