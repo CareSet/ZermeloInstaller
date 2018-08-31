@@ -4,10 +4,9 @@ require_once('vendor/autoload.php');
 use CedricZiel\FlysystemGcs\GoogleCloudStorageAdapter;
 use League\Flysystem\Filesystem;
 
-
-	//TODO, this system should be smart enough to detect a missing bucket and create it dynamically (as nearline class storage) 
-	//So that you did not need to create a new bucket on https://console.cloud.google.com/storage/browser/ 
-	//which is required to use this now..
+        //TODO, this system should be smart enough to detect a missing bucket and create it dynamically (as nearline class storage)
+        //So that you did not need to create a new bucket on https://console.cloud.google.com/storage/browser/
+        //which is required to use this now..
 
 
 	// a couple of low level helpers for downloading stuff..
@@ -64,8 +63,14 @@ class DownloadHelper {
 
 	}
 
-
-	public function mirror_that($sub_dir,$url,$filename = null){
+/*
+	Downloads a file from the web to a local subdirectory.. and automatically uploads the same file up the cloud
+	$sub_dir = the location of the local working directory
+	$url = the url to download and then subseqeuntly mirror
+	$filename = the filename to use when uploading the file, if not set defaults to the basename from pathinfo()
+	$is_use_cloud_name = should we add a md5 to the filename that we upload to the cloud.. defaults to true, set this to false to make the "current" version of files...
+*/
+	public function mirror_that($sub_dir,$url,$filename = null,$is_use_cloud_name = true){
 		
 		if(is_null($filename)){
 			//lets try to calculate it from the url...
@@ -80,7 +85,11 @@ class DownloadHelper {
              	$is_downloaded = self::downloadFile($url,$local_tmp_file); //call our curl download function, which will save the file into the local copy
               	if($is_downloaded){
                 	$local_cloud_file = $this->rename_local_file_to_cloud_version($local_tmp_file); //get a version of the file that is dated with an md5 string
-                     	$cloud_file_name = pathinfo($local_cloud_file,PATHINFO_BASENAME);
+			if($is_use_cloud_name){
+                     		$cloud_file_name = pathinfo($local_cloud_file,PATHINFO_BASENAME);
+			}else{
+                     		$cloud_file_name = $filename; //just use the name as written
+			}
                      	if(!in_array($cloud_file_name,$this->cloud_file_list)){
          			//this means we have at least one new data file..
           			$is_new_data = true;
