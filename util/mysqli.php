@@ -88,6 +88,8 @@ function f_mysql_insert_id(){
 	return mysqli_insert_id($GLOBALS['DB_LINK']);
 }
 
-
+function f_mysql_begin_transaction(){
+        return mysqli_begin_transaction($GLOBALS['DB_LINK']);
+}
 
 ?>
