@@ -69,6 +69,12 @@ class DownloadHelper {
 	$url = the url to download and then subseqeuntly mirror
 	$filename = the filename to use when uploading the file, if not set defaults to the basename from pathinfo()
 	$is_use_cloud_name = should we add a md5 to the filename that we upload to the cloud.. defaults to true, set this to false to make the "current" version of files...
+
+	return integer compatible with the overall EBB return strategy
+		-1 for an error
+		0 for file has not changed
+		1 for new file with new data
+	
 */
 	public function mirror_that($sub_dir,$url,$filename = null,$is_use_cloud_name = true){
 		
@@ -97,10 +103,13 @@ class DownloadHelper {
            			$cloud_file_contents = file_get_contents($local_cloud_file); //load the data into php memory...
             			$cloud_file_path = "$sub_dir/$cloud_file_name";
           			$this->filesystem->write($cloud_file_path,$cloud_file_contents); //savve the file to google cloud.
+				return(1);
           		}else{
             			echo "The $filename is redundant to a file already in the cloud... doing nothing...\n";
+				return(0);
               		}
            	}else{
+			return(-1);
              		echo "Could not download $url\n";
           	}
 
