@@ -41,21 +41,21 @@ use League\Flysystem\Filesystem;
 	$data_dir = $argv[1];
 
 
-	$url_to_get = [];
+	$urls_to_get = [];
 
 	//TODO you need to figure out what urls you want to download here...
-	//like url_to_get[] = ['url' = "http://dommain.com/something/something/something/thefile.zip",
+	//like urls_to_get[] = ['url' = "http://dommain.com/something/something/something/thefile.zip",
 	//			'is_current' => false]; //this variable will control if a url is recorded as the current version...
 
 	$is_new_data = false;
 
-	foreach($url_to_get as $url_data){
-		$url = $url_data['url'];
+	foreach($urls_to_get as $url_data){
+		$this_url = $url_data['url'];
 		$is_current = $url_data['is_current'];
 
-		$mirror_to_dir = "REPLACE_ME"; //you can organize your data however you want
+		$mirror_to_dir = "REPLACE_ME/"; //you can organize your data however you want, note the trailing slash!!
 
-		$result = $DH->mirror_that($mirror_to_dir,$url_to_get);
+		$result = $DH->mirror_that($mirror_to_dir,$this_url);
 		if($result > 0){
 			$is_new_data = true;
 		}
@@ -63,7 +63,7 @@ use League\Flysystem\Filesystem;
 		if($is_current){ //this should only be true once for each type of file..
 			$is_use_cloud_name = false; //we do not want to have the md5 and date for the current version..
 			$file_name = 'current.zip'; //may need to adjust this!!!
-			$DH->mirror_that($mirror_to_dir,$url_to_get,$file_name,$is_use_cloud_name);
+			$DH->mirror_that($mirror_to_dir,$this_url,$file_name,$is_use_cloud_name);
 		}
 	}
 
