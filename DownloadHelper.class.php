@@ -77,7 +77,26 @@ class DownloadHelper {
 	
 */
 	public function mirror_that($sub_dir,$url,$filename = null,$is_use_cloud_name = true){
+	
+		if(is_null($url)){
+			echo "Error: you tried to run mirror_that with a null instead of a url\n";
+			exit(-1);
+		}
+
+		if(is_array($url)){
+			echo "Error: you tried to run mirror_that with an array instead of a url...\n";
+			var_export($url);
+			echo "Error: you tried to run mirror_that with an array instead of a url...\n";
+			exit(-1);
+		}
+
+		if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) {
+    			echo "$url is Not a valid URL\n";
+			exit(-1);
+		}
+
 		
+	
 		if(is_null($filename)){
 			//lets try to calculate it from the url...
 			$parseurl = parse_url($url);
@@ -256,7 +275,7 @@ class DownloadHelper {
 
      		curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
      		curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
-     		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
+     		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false );
      		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 50);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
