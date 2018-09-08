@@ -70,26 +70,100 @@ $GLOBALS['DB_LINK'] = $DB_LINK;
 }
 
 //tired of typing mysqli etc
+//wrapper for http://us3.php.net/manual/en/mysqli.query.php
 function f_mysql_query($query){
 	$result = mysqli_query($GLOBALS['DB_LINK'],$query) or 
 		die("failed with $query\n".mysqli_error($GLOBALS['DB_LINK']));
 	return($result);
 }
 
+//wrapper for http://us3.php.net/manual/en/mysqli.real-escape-string.php
 function f_mysql_real_escape_string($string){
 	return mysqli_real_escape_string($GLOBALS['DB_LINK'], $string);
 }
 
+//wrapper for http://us3.php.net/manual/en/mysqli-result.fetch-assoc.php
 function f_mysql_fetch_assoc($result){
 	return mysqli_fetch_assoc($result);
 }
 
+//wrapper for http://us3.php.net/manual/en/mysqli.insert-id.php
 function f_mysql_insert_id(){
 	return mysqli_insert_id($GLOBALS['DB_LINK']);
 }
 
+//wrapper for http://us3.php.net/manual/en/mysqli.begin-transaction.php
 function f_mysql_begin_transaction(){
         return mysqli_begin_transaction($GLOBALS['DB_LINK']);
 }
+
+//wrapper for http://us3.php.net/manual/en/mysqli.commit.php
+function f_mysql_commit(){
+        return mysqli_commit($GLOBALS['DB_LINK']);
+}
+
+//wrapper for http://www.php.net/manual/en/mysqli.rollback.php
+function f_mysql_rollback(){
+	return mysqli_rollback($GLOBALS['DB_LINK'])
+}
+
+//wrapper http://us3.php.net/manual/en/mysqli.multi-query.php
+function f_mysql_multi_query($query){
+	$result = mysqli_multi_query($GLOBALS['DB_LINK'],$query) or
+                die("failed with $query\n".mysqli_error($GLOBALS['DB_LINK']));
+	return($result);
+}
+
+//wrapper http://us3.php.net/manual/en/mysqli.next-result.php
+function f_mysql_next_result(){
+	return mysqli_next_result($GLOBALS['DB_LINK']);
+}
+
+//wrapper for http://us3.php.net/manual/en/mysqli.more-results.php
+function f_mysql_more_results(){
+	return mysqli_more_results($GLOBALS['DB_LINK']);
+}
+
+//wrapper for http://www.php.net/manual/en/mysqli.warning-count.php
+function f_mysql_warning_count(){
+	return mysqli_warning_count($GLOBALS['DB_LINK']);
+}
+
+//wrapper for http://www.php.net/manual/en/mysqli.kill.php
+function f_mysql_kill($process_id){
+	return mysqli_kill($GLOBALS['DB_LINK'],$process_id);
+}	
+
+//wrapper for http://www.php.net/manual/en/mysqli.errno.php
+function f_mysql_errno(){
+	return mysqli_errno($GLOBALS['DB_LINK']);
+}
+
+//wrapper for http://www.php.net/manual/en/mysqli.error-list.php
+function f_mysql_error_list(){
+	return mysqli_error_list($GLOBALS['DB_LINK']);
+}
+
+//wrapper for http://www.php.net/manual/en/mysqli.error.php
+function f_mysql_error(){
+	return mysqli_error($GLOBALS['DB_LINK']);
+}
+
+//wrapper for http://www.php.net/manual/en/mysqli.dump-debug-info.php
+function f_mysql_dump_debug_info(){
+	return mysqli_dump_debug_info($GLOBALS['DB_LINK']);
+}
+
+//wrapper for http://www.php.net/manual/en/mysqli.close.php
+function f_mysql_close(){
+	return mysqli_close($GLOBALS['DB_LINK']);
+}
+
+//wrapper for http://www.php.net/manual/en/mysqli.affected-rows.php
+function f_mysql_affected_rows(){
+	return mysqli_affected_rows($GLOBALS['DB_LINK']);
+}
+
+
 
 ?>
