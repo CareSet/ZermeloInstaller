@@ -128,8 +128,8 @@ class DownloadHelper {
 				return(0);
               		}
            	}else{
-			return(-1);
              		echo "Could not download $url\n";
+			return(-1);
           	}
 
 	}
