@@ -104,7 +104,7 @@ function f_mysql_commit(){
 
 //wrapper for http://www.php.net/manual/en/mysqli.rollback.php
 function f_mysql_rollback(){
-	return mysqli_rollback($GLOBALS['DB_LINK'])
+	return mysqli_rollback($GLOBALS['DB_LINK']);
 }
 
 //wrapper http://us3.php.net/manual/en/mysqli.multi-query.php
