@@ -18,7 +18,6 @@ class EbbHelper {
 
 	public $cloud_file_list = [];
 	public $bucket = '';
-	public $main_dir = '';
 	public $projectId = '';
 	public $keyFilePath = '';
 
@@ -27,7 +26,7 @@ class EbbHelper {
 
 	private $is_debug = false;	
 
-	public function __construct($projectId,$bucket,$main_dir,$keyFilePath){
+	public function __construct($projectId,$bucket,$keyFilePath){
 
 		if(!file_exists($keyFilePath)){
 			echo "Fatal Error: $keyFilePath does not exist\n";
@@ -36,16 +35,8 @@ class EbbHelper {
 
 		$this->projectId = $projectId;
 		$this->bucket = $bucket;
-		$this->main_dir = $main_dir;
 		$this->keyFilePath = $keyFilePath;
 
-
-		$adapterOptions = [
-    			'projectId' 	=> $projectId,
-    			'bucket'    	=> $bucket,
-    			'prefix'    	=> $main_dir,
-    			'keyFilePath' 	=> $keyFilePath,
-		];
 
 		putenv("GOOGLE_APPLICATION_CREDENTIALS=$keyFilePath");
 
@@ -89,10 +80,14 @@ class EbbHelper {
 		$sub_path - the sub-directory (underneath the bucket and prefix) that you want to download from
 		$local_dir - the local subdirectory.. 
 
+		returns
+		false on fail..		
+		current file name on success...
+
 	*/
 	public function downloadLatestMirror($sub_path,$local_dir){
 
-		$sub_path = rtrim($this->main_dir.'/'.$sub_path,'/').'/'; 
+		$sub_path = rtrim($sub_path,'/').'/'; 
 
 		echo "Mirroring cloud file in $sub_path to $local_dir\n";
 
@@ -101,24 +96,93 @@ class EbbHelper {
 		$is_recursive = true;
 
 		$dir_contents = $this->filesystem->listContents($sub_path,$is_recursive);
-//		$dir_contents = $this->filesystem->listContents('/',$is_recursive);
 
+		$latest_date = '';
+		
 		foreach($dir_contents as $object){
 		
-//			var_export($object);
 	
 			$full_path = $object['path'];
 			$basename = $object['basename'];
-			echo "Cloning $full_path into $local_dir\n";
 			if($this->filesystem->has($full_path)){
-				echo "We have $full_path\n";
+				$file_data = self::parseCloudFile($basename);
+				$date = $file_data['date'];
+				if($latest_date < $date){
+					$current_file = $full_path;
+					$current_basemame = $basename;
+					$current_filedata = $file_data;
+					$latest_date = $date;
+				}
+			}else{
+				echo "Error: lookup for $full_path failed\n";
+				exit(-1);
 			}
 
-			//$contents = $this->filesystem->read($full_path);
-			//$local_FS->write($basename,$contents);
+		}
+		if($latest_date != ''){
+			echo "The latest date was $date\n";
+			echo "Cloning $current_file to $local_dir \n";
+			$contents = $this->filesystem->read($current_file);
+			$local_FS->put($basename,$contents);
+
+			$full_path = "$local_dir/$basename";
+			$file_name = pathinfo($full_path,PATHINFO_FILENAME);
+			$extension_to_extract_map = [
+				'tar' => "tar -xvf $full_path -C $local_dir",
+				'tgz' => "tar -xzvf $full_path -C $local_dir",
+				'tar.gz' => "tar -xzvf $full_path -C $local_dir",
+				'zip' => "unzip $full_path -f $local_dir" ,
+				'gzip' => "gzip -dkc < $full_path > $local_dir/$file_name",
+				];
+
+			$current_extension = $current_filedata['extension'];
+
+			if(isset($extension_to_extract_map[$current_extension])){
+				//then this is a compressed file and we sould un compress it.
+				$cmd = $extension_to_extract_map[$current_extension];
+				echo "Using $cmd to decompress file\n";
+				system($cmd);
+	
+			}
+
+
+			return($full_path);
+		}else{
+			echo "Error: I found no file under $sub_path\n";
+			//not exiting.. might want to keep on rolling..
+			return(false);
+		}
+	}
+/*
+	given a cloudfile name return the basic name, md5 and date as array
+*/
+	public static function parseCloudFile($cloud_file){
+		$file_array = explode('.',$cloud_file);
+		if(count($file_array) < 4){
+			echo "Error: A cloud file needs at least 4 segments $cloud_file fails\n";
+			exit(-1);
 		}
 
+		$extension = array_pop($file_array);
 
+		$date = array_pop($file_array);
+
+		if($date == 'tar' && $extension = 'gz'){
+			$extension = "tar.gz";
+			$date = array_pop($file_array);
+		}
+
+		$md5 = array_pop($file_array);
+		$name = implode($file_array);
+
+		$return_me = [
+			'name' => $name,
+			'date' => $date,
+			'md5' => $md5,
+			'extension' => $extension,
+		];
+
+		return($return_me);
 	}
 
 
@@ -436,7 +500,7 @@ class EbbHelper {
 
 		//that does not fucking work.
 		//this command should not need me to change directory to the outdir..
-		$tar_cmd = "tar -C $out_dir -czvf $just_tar_file";
+		$tar_cmd = "tar -C $out_dir -czf $just_tar_file";
 		
 		//but 'should' is a terrible terrible word
 		chdir($out_dir);
