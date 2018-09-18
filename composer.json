@@ -14,10 +14,7 @@
         "php": ">=7.0.0",
         "bestmomo/nice-artisan": "^1.1",
         "careset/caresetjwtauthclient": "dev-master",
-        "cedricziel/flysystem-gcs": "^2.0",
         "fideloper/proxy": "~3.3",
-        "google/cloud-datastore": "^1.5",
-        "google/cloud-storage": "^1.7",
         "laravel/framework": "5.5.*",
         "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
@@ -29,6 +26,7 @@
         "spatie/laravel-tail": "^2.0",
         "studio/laravel-totem": "^2.2",
         "sunra/php-simple-html-dom-parser": "^1.5",
+        "superbalist/flysystem-google-storage": "^7.0",
         "tymon/jwt-auth": "^0.5.12",
         "vlucas/phpdotenv": "^2.4"
     },

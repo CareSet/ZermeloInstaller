@@ -1,8 +1,10 @@
 <?php
 require_once('vendor/autoload.php');
 
-use CedricZiel\FlysystemGcs\GoogleCloudStorageAdapter;
+use Google\Cloud\Storage\StorageClient;
 use League\Flysystem\Filesystem;
+use League\Flysystem\Adapter\Local;
+use Superbalist\Flysystem\GoogleStorage\GoogleStorageAdapter;
 
         //TODO, this system should be smart enough to detect a missing bucket and create it dynamically (as nearline class storage)
         //So that you did not need to create a new bucket on https://console.cloud.google.com/storage/browser/
@@ -11,7 +13,7 @@ use League\Flysystem\Filesystem;
 
 	// a couple of low level helpers for downloading stuff..
 	//made into functions on an object that understands how to work with google files
-class DownloadHelper {
+class EbbHelper {
 
 
 	public $cloud_file_list = [];
@@ -45,13 +47,23 @@ class DownloadHelper {
     			'keyFilePath' 	=> $keyFilePath,
 		];
 
-		$this->adapter = new GoogleCloudStorageAdapter(null, $adapterOptions);
+		putenv("GOOGLE_APPLICATION_CREDENTIALS=$keyFilePath");
+
+		$storageClient = new StorageClient([
+    			'projectId' => $projectId,
+		]);
+
+		$_ENV['SUPPRESS_GCLOUD_CREDS_WARNING'] = true;
+
+		$bucket = $storageClient->bucket($bucket);
+		$this->adapter = new GoogleStorageAdapter($storageClient, $bucket);
 		$this->filesystem = new Filesystem($this->adapter);
 
 		$this->updateCloudFileList();
 	}
 
-	// get the list of files 
+	// get the list of files for this bucket and path..
+	// and store it locally... 
 	public function updateCloudFileList(){
 
 		$is_recursive = true;
@@ -63,6 +75,54 @@ class DownloadHelper {
 		}
 
 	}
+
+	/*
+		Lets you download the latest version of a file in any sub-path (in the bucket and underneath the prefix)
+		to a local directory of your preference..
+
+		if they download file is a zip/tar/gzip/etc file... it will extract the contents to the directory you specified. 
+
+		This understands the cloud files, if you have multiple types of files in the sub-dir you specify..
+		It will download the latest version of all of the files..
+
+		arguments:
+		$sub_path - the sub-directory (underneath the bucket and prefix) that you want to download from
+		$local_dir - the local subdirectory.. 
+
+	*/
+	public function downloadLatestMirror($sub_path,$local_dir){
+
+		$sub_path = rtrim($this->main_dir.'/'.$sub_path,'/').'/'; 
+
+		echo "Mirroring cloud file in $sub_path to $local_dir\n";
+
+		$local_FS = new Filesystem(new Local($local_dir));
+
+		$is_recursive = true;
+
+		$dir_contents = $this->filesystem->listContents($sub_path,$is_recursive);
+//		$dir_contents = $this->filesystem->listContents('/',$is_recursive);
+
+		foreach($dir_contents as $object){
+		
+//			var_export($object);
+	
+			$full_path = $object['path'];
+			$basename = $object['basename'];
+			echo "Cloning $full_path into $local_dir\n";
+			if($this->filesystem->has($full_path)){
+				echo "We have $full_path\n";
+			}
+
+			//$contents = $this->filesystem->read($full_path);
+			//$local_FS->write($basename,$contents);
+		}
+
+
+	}
+
+
+
 
 /*
 	Downloads a file from the web to a local subdirectory.. and automatically uploads the same file up the cloud
@@ -376,7 +436,7 @@ class DownloadHelper {
 
 		//that does not fucking work.
 		//this command should not need me to change directory to the outdir..
-		$tar_cmd = "tar -C $out_dir -czf $just_tar_file";
+		$tar_cmd = "tar -C $out_dir -czvf $just_tar_file";
 		
 		//but 'should' is a terrible terrible word
 		chdir($out_dir);
@@ -387,7 +447,7 @@ class DownloadHelper {
 			$filename = pathinfo($full_filename,PATHINFO_BASENAME);
 			$tar_cmd .= " $filename";
 			$this_md5_string = md5_file($full_filename);
-			echo "Got $this_md5_string md5 for $filename\n";
+		//	echo "Got $this_md5_string md5 for $filename\n";
 			$merged_md5_string .= $this_md5_string;
 		}
 
@@ -399,7 +459,7 @@ class DownloadHelper {
 		
 		$meta_md5 = md5($merged_md5_string);
 		$cloud_file_name = $this->calculate_cloud_file_name($target_tar_file, $meta_md5);
-		echo "Merging $merged_md5_string into $meta_md5 for $cloud_file_name\n";
+		//echo "Merging $merged_md5_string into $meta_md5 for $cloud_file_name\n";
 
 		$local_cloud_file = "$out_dir/$cloud_file_name";
 
