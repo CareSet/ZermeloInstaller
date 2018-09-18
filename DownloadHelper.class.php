@@ -22,7 +22,8 @@ class DownloadHelper {
 
 	public $adapter;
 	public $filesystem;
-	
+
+	private $is_debug = false;	
 
 	public function __construct($projectId,$bucket,$main_dir,$keyFilePath){
 
@@ -176,9 +177,8 @@ class DownloadHelper {
 			
 		$local_tmp_file = __DIR__ . "/data/$filename_stub.$socrata_four_by_four.tgz";
 
-             	$is_downloaded = self::downloadSocrataFile($base_url,$socrata_four_by_four,$filename_stub,$local_tmp_file); //call our curl download function, which will save the file into the local copy
-              	if($is_downloaded){
-                	$local_cloud_file = $this->rename_local_file_to_cloud_version($local_tmp_file); //get a version of the file that is dated with an md5 string
+             	$local_cloud_file = $this->downloadSocrataFile($base_url,$socrata_four_by_four,$filename_stub,$local_tmp_file); //call our curl download function, which will save the file into the local copy
+              	if($local_cloud_file){
                      	$cloud_file_name = pathinfo($local_cloud_file,PATHINFO_BASENAME);
 
                      	if(!in_array($cloud_file_name,$this->cloud_file_list)){
@@ -234,42 +234,27 @@ class DownloadHelper {
 
 
 
-	public static function better_md5_file($filename){
-			
-		$extension = strtolower(pathinfo($filename,PATHINFO_EXTENSION));
-		if($extension == 'zip'){
-			//then we need to examine the contents and do an md5 on the inside...
-			$open = zip_open($filename);
-
-			if (is_numeric($open)) {
-    				echo "Error: Zip Open on $filename Error #: $open\n";
-				exit(-1);
-   			} else {
-   				while($zip_entry = zip_read($open)) {
-	
-				}
-			}
-		}else{
-			//its not a zipfile just use the regular function..
-			return(md5_file($filename));
-		}	
-		
-	}
-
 
 //we need a reliable way to translate a file name into a dated and md5ed version of itself. 
 //this function handles that file name transition...
 //something.ASDFAERWADASDADSAD.2001-03-10.zip where 
 //the form is original_file_name.MD5SumOfFile.todaysMySQLFormatDate.original_file_type
 //then erases the old file. It is smart enough to do this in the same folder as the original file...
-	public function calculate_cloud_file_name($local_file){
+	public function calculate_cloud_file_name($local_file, $md5_arg = null, $date_string_arg = null){
 
 		$pathinfo = pathinfo($local_file);
 		$file_name_first_part = $pathinfo['filename'];
 		$file_extension = $pathinfo['extension'];
-		$my_md5 = md5_file($local_file);
-		$mysql_today_datestring = date("Y-m-d");
-
+		if(is_null($md5_arg)){
+			$my_md5 = md5_file($local_file);
+		}else{
+			$my_md5 = $md5_arg; //have an argument allows us to have a different method for calculating the md5 of zip files etc.
+		}
+		if(is_null($date_string_arg)){
+			$mysql_today_datestring = date("Y-m-d");
+		}else{
+			$mysql_today_datestring = $date_string_arg; //not actually sure why you would need this.. but.
+		}
 
 		$new_last_name = "$my_md5.$mysql_today_datestring.$file_extension"; 
 		//we technically do not know how many characters this is, because $file_extension could be very long...
@@ -291,70 +276,6 @@ class DownloadHelper {
 	
 	}
 
-//we need a way to look at the list of files that are already in a cloud directory, 
-//and see if the file that we downloaded today ($current_file_name) is different than previously seen files...
-//note if you have files stored in the cloud that are not using the cloud naming scheme... this will break...
-//this version uses the actual md5 of a downloaded file to check and seee...
-	public function is_downloaded_file_in_cloud_list($downloaded_file_name){
-	
-
-
-		$current_md5 = md5_file($downloaded_file_name);
-
-		foreach($this->cloud_file_list as $this_cloud_file){
-			$file_name_dot_array = explode('.',$this_cloud_file);
-			$extension = array_pop($file_name_dot_array);
-			$mysql_date = array_pop($file_name_dot_array);
-			$file_md5 = array_pop($file_name_dot_array);
-			if($current_md5 == $file_md5){
-				return(true);
-			}
-		
-		}
-
-		return(false);
-
-	}
-
-//we need a way to look at the list of files that are already in a cloud directory, 
-//this version just checks to see that there is a file with the same name in the file list...
-	public function is_filename_in_cloud_list($filename){
-	
-		//we need to see what this filename would be translated to, given our 500 character limit...
-		$max_length = 500;
-		$file_parts = explode('.',$filename);
-		$file_extension = array_pop($file_parts);
-		$first_name = implode('.',$file_parts);
-	
-		$md5_length = 32; //always
-		$mysqldate_length = 10; //always... well until the year 10000
-		$tail_length = $md5_length + $mysqldate_length + strlen($file_extension);
-		$max_len_for_first_name = $max_length - $tail_length;
-		if(strlen($first_name) > $max_len_for_first_name){
-			$new_first_name = substr($first_name,0,$max_len_for_first_name);
-		}else{
-			$new_first_name = $first_name;
-		}
-
-	
-
-		foreach($this->cloud_file_list as $this_cloud_file){
-			$file_name_dot_array = explode('.',$this_cloud_file);
-			$extension = array_pop($file_name_dot_array);
-			$mysql_date = array_pop($file_name_dot_array);
-			$file_md5 = array_pop($file_name_dot_array);
-			$cloud_first_name = implode('.',$file_name_dot_array);
-			if($cloud_first_name == $new_first_name){
-				//then there is a cloud file that has the same name as this file name would if it had been uploaded...
-				return(true);
-			}	
-		}
-
-		return(false);
-
-}
-
-
 /*
 	Is essentially identical to downloadFile.. except that it understands how to download Socrata meta data
 	as well as csv, and store both the metadata and the csv file into a zip file
@@ -363,15 +284,19 @@ class DownloadHelper {
 	arguments
 	$base_url - the socrata base url (something like https://data.cms.gov/)
 	$socrata_four_by_four - the dataset identifier like je57-c47h in https://data.cms.gov/Medicare-Enrollment/Address-Sub-File/je57-c47h
-	$zip_file_path - where to put the zip file that is built from downloaded files... 
+	$target_tar_file - where to put the zip file that is built from downloaded files... 
+
+	returns
+	$zip_file_path - the real zip file path (includes an md5 and date);
 */
-	public static function downloadSocrataFile($base_url, $socrata_four_by_four, $filename_stub, $zip_file_path){
+	public function downloadSocrataFile($base_url, $socrata_four_by_four, $filename_stub, $target_tar_file){
 
 		//we are going to be building a zip file... 
 		//and we want to put all of the component files into the same working directory...
 		//we use pathinfo to figure out where that is.
-		$pathinfo = pathinfo($zip_file_path);
+		$pathinfo = pathinfo($target_tar_file);
 		$out_dir = $pathinfo['dirname']. "/"; //this is where we will put all of the file we download before we zip them up...
+		$just_tar_file = $pathinfo['basename'];
 
 		$base_url = rtrim($base_url,'/'); //its easier to remove it and then add it back...
 
@@ -440,24 +365,48 @@ class DownloadHelper {
 		$year = date('Y');
 		//you have to do all of the things here:
 		//https://reproducible-builds.org/docs/archives/
-		$tar_cmd = "tar --sort=name   --mtime='$year-01-01 00:00Z'  --owner=0 --group=0 --numeric-owner -cf $zip_file_path.tar ";
-		foreach($to_download_list as $filename => $url){
+		//this seems to work for a few moments and then no longer match. 
+		//including it here to prevent some future developer (i.e. myself) from rabbit holing on this.. 
+	
+		//you have to do all of the things here:
+		//https://reproducible-builds.org/docs/archives/
+		//this seems to work for a few moments and then no longer match. 
+		//including it here to prevent some future developer (i.e. myself) from rabbit holing on this.. 
+		//$tar_cmd = "tar --sort=name   --mtime='$year-01-01 00:00Z'  --owner=0 --group=0 --numeric-owner -cf $zip_file_path_template.tar ";
+
+		//that does not fucking work.
+		//this command should not need me to change directory to the outdir..
+		$tar_cmd = "tar -C $out_dir -czvf $just_tar_file";
+		
+		//but 'should' is a terrible terrible word
+		chdir($out_dir);
+
+		$merged_md5_string = '';
+
+		foreach($to_download_list as $full_filename => $url){
+			$filename = pathinfo($full_filename,PATHINFO_BASENAME);
 			$tar_cmd .= " $filename";
+			$this_md5_string = md5_file($full_filename);
+			echo "Got $this_md5_string md5 for $filename\n";
+			$merged_md5_string .= $this_md5_string;
 		}
 
+		
 		echo "Tarring with $tar_cmd\n";
 		system($tar_cmd);
-		
-		$gzip_cmd = "gzip -n $zip_file_path.tar";
-		echo "Compressing with $gzip_cmd\n";
-		system($gzip_cmd);
-		
-		$new_name = "$zip_file_path.tar.gz";
-		rename($new_name,$zip_file_path);
 
+		chdir(__DIR__); //go back
+		
+		$meta_md5 = md5($merged_md5_string);
+		$cloud_file_name = $this->calculate_cloud_file_name($target_tar_file, $meta_md5);
+		echo "Merging $merged_md5_string into $meta_md5 for $cloud_file_name\n";
 
+		$local_cloud_file = "$out_dir/$cloud_file_name";
+
+		rename($target_tar_file,$local_cloud_file);
+		
 		//if we get all the way here then we have built the zip file correctly...
-		return(true);
+		return($local_cloud_file);
 
  	}
 
@@ -472,35 +421,51 @@ class DownloadHelper {
 */
 	public static function downloadFile($url, $filepath){
 
+		$is_debug = true;
+	
+		if($is_debug){
+			if(file_exists($filepath)){
+				//in debug mode, we just assume that if the file already exists... then it is the current download...
+				echo "Warning!! in debug mode, not downloading  $url because $filepath already exists..\n";
+				return(true);
+			}
+		}
+
 		echo "Downloading $url...";
 
 	    	$fp = fopen($filepath, 'w+');
-     		$ch = curl_init($url);
+		if($fp){
+     			$ch = curl_init($url);
 
-     		curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
-     		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false );
-     		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 0); //0 is infinite.
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-     		curl_setopt($ch, CURLOPT_FILE, $fp);
-     		curl_exec($ch);
+     			curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+     			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false );
+     			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 0); //0 is infinite.
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+     			curl_setopt($ch, CURLOPT_FILE, $fp);
+     			curl_exec($ch);
 
 
-        	$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        	if($httpCode == 404) {
-			echo "Error: got 404\n";
-               	 	return(false);
-        	}
+        		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        		if($httpCode == 404) {
+				echo "Error: got 404\n";
+               		 	return(false);
+        		}
 
-     		curl_close($ch);
-     		fclose($fp);
+     			curl_close($ch);
+     			fclose($fp);
 
-		if(filesize($filepath) > 0){
-			echo "done.\n";
-			return(true);
+			if(filesize($filepath) > 0){
+				echo "done.\n";
+				return(true);
+			}else{
+				echo "Error: download file size was zero trying to save $url to $filepath \n";
+				return(false);
+			}
 		}else{
-			echo "Error: download file size was zero trying to save $url to $filepath \n";
-			return(false);
+			//got a false file pointer here...
+			echo "Error: Failed to open $filepath for writing...\n";
+			exit(-1);
 		}
  	}
 
