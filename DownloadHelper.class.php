@@ -421,7 +421,7 @@ class DownloadHelper {
 */
 	public static function downloadFile($url, $filepath){
 
-		$is_debug = true;
+		$is_debug = false;
 	
 		if($is_debug){
 			if(file_exists($filepath)){
