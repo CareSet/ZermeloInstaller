@@ -376,7 +376,7 @@ class DownloadHelper {
 
 		//that does not fucking work.
 		//this command should not need me to change directory to the outdir..
-		$tar_cmd = "tar -C $out_dir -czvf $just_tar_file";
+		$tar_cmd = "tar -C $out_dir -czf $just_tar_file";
 		
 		//but 'should' is a terrible terrible word
 		chdir($out_dir);
