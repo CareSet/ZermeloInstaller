@@ -57,3 +57,8 @@ data/*
 
 #json auth files like from google.
 *.auth.json
+
+# ignore compiled python files
+*.pyc 
+
+
