@@ -20,7 +20,7 @@ use League\Flysystem\Filesystem;
 
 	//These should not change.
     	$projectId = 'savvy-summit-133807'; //this should likely not change
-    	$keyFilePath = './google_cloud.auth.json'; //should likely not change
+    	$keyFilePath = __DIR__ '/google_cloud.auth.json'; //should likely not change
 
 	//Create the download helper.. this lets you translate between things on the Internet, and our file backup system easily.
 	$DH = new DownloadHelper(
