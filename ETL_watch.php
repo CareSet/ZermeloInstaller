@@ -13,6 +13,7 @@ use League\Flysystem\Filesystem;
 
 	//always change..
     	$bucket    = 'REPLACE_ME'; // needs to be changed with every script, should be something like ebb_yourthing. NOTE for now you need to create this bucket using the google console
+		//Remember to use NEARLINE storage when you do this. The price point on this is the reason we use Google and not AWS
 
 	//sometimes change..
 	$path = 'raw_file_mirror'; //this is an ok starting point NOTE for now you need to create this directory using the Google console!!
