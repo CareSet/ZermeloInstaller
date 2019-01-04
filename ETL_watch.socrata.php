@@ -1,4 +1,4 @@
-i<?php
+<?php
 /*
 	This file understands how to download new copies of the data... 
 	and to initiate futher processing
