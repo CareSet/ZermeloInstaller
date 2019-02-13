@@ -23,3 +23,4 @@ sudo -u $real_user cp ./templates/ReadMe.template.md README.md
 # and the web server should be a member of the careset group!!
 #chmod 0777 storage -R
 #chmod 0777 bootstrap/cache -R 
+chmod g+w storage/* -R
