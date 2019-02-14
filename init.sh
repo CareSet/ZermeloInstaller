@@ -24,6 +24,10 @@ sudo -u $real_user cp ./templates/ReadMe.template.md README.md
 #enable DURC
 sudo -u $real_user php artisan vendor:publish --provider="CareSet\DURC\DURCServiceProvider"
 sudo -u $real_user php artisan vendor:publish --tag=laravel-handlebars
+#enable Zermelo
+sudo -u $real_user php artisan install:zermelo
+sudo -u $real_user php artisan install:zermelobladetabular
+sudo -u $real_user php artisan install:zermelobladecard
 
 
 # these commands are the reason that we insist on running with sudo
