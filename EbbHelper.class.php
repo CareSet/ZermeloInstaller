@@ -243,13 +243,13 @@ class EbbHelper {
                      	if(!in_array($cloud_file_name,$this->cloud_file_list)){
          			//this means we have at least one new data file..
           			$is_new_data = true;
-            			echo "Uploading $filename to $cloud_file_name from $local_cloud_file!!\n";
+            			echo "UPLOADING: \t$filename to $cloud_file_name from $local_cloud_file!!\n";
            			$cloud_file_contents = file_get_contents($local_cloud_file); //load the data into php memory...
             			$cloud_file_path = "$sub_dir/$cloud_file_name";
           			$this->filesystem->write($cloud_file_path,$cloud_file_contents); //savve the file to google cloud.
 				return(1);
           		}else{
-            			echo "The $filename is redundant to a file already in the cloud... doing nothing...\n";
+            			echo "REDUNDANT: \tThe $filename is redundant to a file already in the cloud... doing nothing...\n";
 				return(0);
               		}
            	}else{
@@ -308,13 +308,13 @@ class EbbHelper {
                      	if(!in_array($cloud_file_name,$this->cloud_file_list)){
          			//this means we have at least one new data file..
           			$is_new_data = true;
-            			echo "Uploading  $cloud_file_name from $local_cloud_file!!\n";
+            			echo "UPLOADING: \t$cloud_file_name from $local_cloud_file!!\n";
            			$cloud_file_contents = file_get_contents($local_cloud_file); //load the data into php memory...
             			$cloud_file_path = "$sub_dir/$cloud_file_name";
           			$this->filesystem->write($cloud_file_path,$cloud_file_contents); //savve the file to google cloud.
 				return(1);
           		}else{
-            			echo "The $cloud_file_name is redundant to a file already in the cloud... doing nothing...\n";
+            			echo "REDUNDANT: \tThe $cloud_file_name is redundant to a file already in the cloud... doing nothing...\n";
 				return(0);
               		}
            	}else{
@@ -516,7 +516,7 @@ class EbbHelper {
 		}
 
 		
-		echo "Tarring with $tar_cmd\n";
+		//echo "Tarring with $tar_cmd\n";
 		system($tar_cmd);
 
 		chdir(__DIR__); //go back
@@ -555,7 +555,7 @@ class EbbHelper {
 			}
 		}
 
-		echo "Downloading $url...";
+		//echo "Downloading $url...";
 
 	    	$fp = fopen($filepath, 'w+');
 		if($fp){
@@ -580,7 +580,7 @@ class EbbHelper {
      			fclose($fp);
 
 			if(filesize($filepath) > 0){
-				echo "done.\n";
+				//echo "done.\n";
 				return(true);
 			}else{
 				echo "Error: download file size was zero trying to save $url to $filepath \n";
