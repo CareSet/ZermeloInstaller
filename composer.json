@@ -22,7 +22,7 @@
         "nesbot/carbon": "^1.22",
         "phpunit/phpunit": "^7.3",
         "proai/laravel-handlebars": "^1.7",
-        "smartystreets/phpsdk": "^4.2.0",
+	"smartystreets/phpsdk": "^4.5.7",
         "spatie/laravel-tail": "^2.0",
         "studio/laravel-totem": "^2.2",
         "sunra/php-simple-html-dom-parser": "^1.5",
