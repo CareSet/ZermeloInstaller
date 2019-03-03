@@ -16,8 +16,10 @@ use Dotenv\Dotenv;
 class SmartyExtract {
 
 
-
-	function processAddress($address_text){
+	//saves all of the candidates to the trueaddress database...
+	///and then returns the trueaddress_id of the last one...
+	//this version assumes that the argument is an address.. in a single block
+	function processBlockAddress($address_text){
 
 		$dotenv = new \Dotenv\Dotenv(__DIR__);
 		$dotenv->load();
@@ -26,7 +28,7 @@ class SmartyExtract {
        	 	$authId = getenv('SMARTY_AUTH_ID');
         	$authToken = getenv('SMARTY_AUTH_TOKEN');
 
-		echo "authid: $authId and authtoken: $authToken\n";
+		//echo "authid: $authId and authtoken: $authToken\n";
 
 		$staticCredentials = new StaticCredentials($authId, $authToken);
         	$client = (new ClientBuilder($staticCredentials))->buildUSExtractApiClient();
@@ -35,28 +37,35 @@ class SmartyExtract {
         $client->sendLookup($lookup);
         $result = $lookup->getResult();
         $metadata = $result->getMetadata();
-        print('Found ' . $metadata->getAddressCount() . " addresses.\n");
-        print($metadata->getVerifiedCount() . " of them were valid.\n\n");
+//        print('Found ' . $metadata->getAddressCount() . " addresses.\n");
+//        print($metadata->getVerifiedCount() . " of them were valid.\n\n");
         $addresses = $result->getAddresses();
-        print("Addresses: \n**********************\n");
+ //       print("Addresses: \n**********************\n");
         foreach($addresses as $address) {
-            print("\n\"" . $address->getText() . "\"\n");
-            print("\nVerified? " . ArrayUtil::getStringValueOfBoolean($address->isVerified()));
+ //           print("\n\"" . $address->getText() . "\"\n");
+ //           print("\nVerified? " . ArrayUtil::getStringValueOfBoolean($address->isVerified()));
             if (count($address->getCandidates()) > 0) {
-                print("\nMatches:");
+ //               print("\nMatches:");
                 foreach ($address->getCandidates() as $candidate) {
-                    print("\n" . $candidate->getDeliveryLine1());
-                    print("\n" . $candidate->getLastLine() . "\n");
-		    echo "Trueaddress id = " . $this->trueaddressFromSmartyCandidate($candidate) ."\n";
+   //                 print("\n" . $candidate->getDeliveryLine1());
+    //                print("\n" . $candidate->getLastLine() . "\n");
+		    $trueaddress_id =  $this->trueaddressFromSmartyCandidate($candidate);
+		    
+			//lets use the first one..
+			return($trueaddress_id);
                 }
-            } else print("\n");
-            print("**********************\n");
+
+            } else {
+		return(0); //fail
+	    }
         }
 
+	return(0); //got no results... also faile
 
 	}
 
-
+	//given a smarty php Candidate object..
+	//find or save a trueaddress and return the trueaddress_id.
 	public function  trueaddressFromSmartyCandidate($C){ //$c = candidate
 
  		$barcode = $C->getDeliveryPointBarcode();
@@ -136,7 +145,11 @@ WHERE city_name = '$city_name' AND short_state = '$state_code'
  $d['precision'] = $C->getMetadata()->getPrecision();
  $d['time_zone'] = $C->getMetadata()->getTimeZone();
  $d['utc_offset'] = $C->getMetadata()->getUtcOffset();
- $d['is_dst'] = $C->getMetadata()->obeysDst();
+ if($C->getMetadata()->obeysDst()){
+	$d['is_dst'] = 1;
+ }else{
+	$d['is_dst'] = 0;
+ }
  $d['dpv_match_code'] = $C->getAnalysis()->getDpvMatchCode();
  $d['dpv_footnotes'] = $C->getAnalysis()->getDpvFootnotes();
  $d['dpv_cmra'] = $C->getAnalysis()->getCmra();
