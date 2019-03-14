@@ -2,6 +2,39 @@
 
 return [
 
+
+    'debug_blacklist' => [
+        '_ENV' => [
+                'APP_KEY',
+                'DB_PASSWORD',
+                'REDIS_PASSWORD',
+                'MAIL_PASSWORD',
+                'PUSHER_APP_KEY',
+                'TWITTER_KEY',
+                'TWITTER_SECRET',
+                'TWITTER_REDIRECT_URL',
+                'TWITTER_TMP_TOKEN',
+                'TWITTER_TMP_TOKEN_SECRET',
+                'PUSHER_APP_SECRET',
+                'CARESET_TOKEN',
+                'private_key_id',
+                'private_key',
+                'SMARTY_AUTH_ID',
+                'SMARTY_AUTH_TOKEN',
+        ],
+        '_SERVER' => [
+            'APP_KEY',
+            'DB_PASSWORD',
+            'REDIS_PASSWORD',
+            'MAIL_PASSWORD',
+            'PUSHER_APP_KEY',
+            'PUSHER_APP_SECRET',
+        ],
+        '_POST' => [
+            'password',
+        ],
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
