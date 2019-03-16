@@ -21,6 +21,7 @@ return [
                 'private_key',
                 'SMARTY_AUTH_ID',
                 'SMARTY_AUTH_TOKEN',
+		'GITHUB_TOKEN',
         ],
         '_SERVER' => [
             'APP_KEY',

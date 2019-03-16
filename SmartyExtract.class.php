@@ -21,6 +21,11 @@ class SmartyExtract {
 	//this version assumes that the argument is an address.. in a single block
 	function processBlockAddress($address_text){
 
+		if(strlen(trim($address_text)) == 0){
+			//fail
+			return(0);
+		}
+
 		$dotenv = new \Dotenv\Dotenv(__DIR__);
 		$dotenv->load();
 
