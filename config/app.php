@@ -22,6 +22,7 @@ return [
                 'SMARTY_AUTH_ID',
                 'SMARTY_AUTH_TOKEN',
 		'GITHUB_TOKEN',
+		'SLACK_API_TOKEN',
         ],
         '_SERVER' => [
             'APP_KEY',
