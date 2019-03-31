@@ -1,8 +1,8 @@
 <?php	
-	require_once('vendor/autoload.php');
-        require_once('util/mysqli.php');
-	require_once('util/global_functions.php');
-	require_once('run_sql_loop.function.php');
+	require_once(__DIR__ . '/vendor/autoload.php');
+        require_once(__DIR__ . '/util/mysqli.php');
+	require_once(__DIR__ . '/util/global_functions.php');
+	require_once(__DIR__ . '/util/run_sql_loop.function.php');
 
 
         if(!isset($argv[1])){
