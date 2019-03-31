@@ -28,7 +28,8 @@
         "sunra/php-simple-html-dom-parser": "^1.5",
         "superbalist/flysystem-google-storage": "^7.0",
         "tymon/jwt-auth": "^0.5.12",
-        "vlucas/phpdotenv": "^2.4"
+        "vlucas/phpdotenv": "^2.4",
+	"wrapi/slack": "^1.0"
     },
     "require-dev": {
         "careset/durc": "dev-master",
