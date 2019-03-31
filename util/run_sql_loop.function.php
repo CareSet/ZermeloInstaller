@@ -1,5 +1,5 @@
 <?php	
-        require_once('util/mysqli.php');
+        require_once(__DIR__ . '/mysqli.php');
 
 /*
 	accepts a series of SQL commands as php associative array..
