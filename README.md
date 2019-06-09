@@ -5,7 +5,7 @@ Eden is the "fork point" for any PHP based project.
 
 If you are reading this
 
-- `sudo bash :wqinit.sh`
+- `sudo bash init.sh`
 - Replace this README.md
 
 
