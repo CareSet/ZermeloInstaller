@@ -29,7 +29,10 @@
 		echo "The .env file already exists, so we are not deleting it\n";
 	}
 
-
+	foreach($cmds as $this_command){
+		echo "Running $this_command\n";
+		system($this_command);
+	}
 
 /*
 // for now, we are ignoring the installation of zermelo, because it requires the database to be configured
