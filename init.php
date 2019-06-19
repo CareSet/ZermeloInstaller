@@ -8,9 +8,10 @@
 		exit();
 	}
 
-	$real_user = trim(shell_exec('whoami'));
+	$real_user = getenv('SUDO_USER');
 
 	echo "running as root, but from |$real_user| unix account\n";
+
 
 	$cmds = [
 		"sudo -u $real_user cp .env.example .env",
