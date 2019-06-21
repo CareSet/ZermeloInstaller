@@ -14,7 +14,6 @@
 
 
 	$cmds = [
-		"sudo -u $real_user cp .env.example .env",
 		"sudo -u $real_user composer update",
 		"sudo -u $real_user php artisan key:generate",
 		"sudo -u $real_user cp ./templates/ReadMe.template.md README.md",
