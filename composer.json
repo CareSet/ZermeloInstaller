@@ -25,7 +25,6 @@
         "proai/laravel-handlebars": "^1.7",
         "smartystreets/phpsdk": "^4.7.0",
         "spatie/laravel-tail": "^2.0",
-        "studio/laravel-totem": "^2.2",
         "sunra/php-simple-html-dom-parser": "^1.5",
         "superbalist/flysystem-google-storage": "^7.0",
         "tymon/jwt-auth": "^0.5.12",
