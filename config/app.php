@@ -216,7 +216,6 @@ return [
         ProAI\Handlebars\HandlebarsServiceProvider::class,
 
 	// console web interfaces
-	Studio\Totem\Providers\TotemServiceProvider::class,
 
 	// load DURC
         CareSet\DURC\DURCServiceProvider::class,
