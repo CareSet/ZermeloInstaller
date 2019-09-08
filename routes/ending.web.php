@@ -1,5 +1,5 @@
 
 //uncomment to enable authentication
-//} //end section for auth middleware
+//}); //end section for auth middleware
 
 
