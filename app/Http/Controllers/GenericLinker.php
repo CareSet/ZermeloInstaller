@@ -109,8 +109,13 @@ class GenericLinker extends Controller
 
 		$pdo = \DB::connection()->getPdo();
 
-		$db = \Config::get('database.connections.'.\Config::get('database.default').'.database');
-		$db = 'lore';
+                //Allow for a custom linker database...
+                $db = env('LINKER_DATABASE',false);
+                if(!$db){
+                        $db = env('DB_DATABASE');
+                }
+                $pdo->query("USE $db");
+
 
 		$pdo->query("USE $db");
 
