@@ -16,18 +16,12 @@ Route::get('/', function () {
 });
 
 
-Route::get('/mockup',function () {
-        $content = view('dashboard_mockup');
-        $test_data = ['content' => $content];
-        return view('main_html',$test_data);
-});
-
 
 Route::middleware([\CareSet\CareSetJWTAuthClient\Middleware\JWTClientMiddleware::class])->group(function () {
 
 	Route::get('/test',function() {
 
-		return 'Hello World!';
+		return 'You have authentication working on this server';
 
 	});
 
