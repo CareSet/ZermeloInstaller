@@ -5,37 +5,40 @@
     "license": "MIT",
     "type": "project",
     "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:CareSet/CareSetJWTAuthClient.git"
-        }
+    	{
+        	"type": "vcs",
+		"url" : "git@github.com:CareSet/ZermeloBladeGraph.git"
+    	}
     ],
     "require": {
         "php": ">=7.0.0",
         "bestmomo/nice-artisan": "^1.1",
-        "careset/caresetjwtauthclient": "dev-master",
+        "careset/zermelo": "dev-master",
+        "careset/zermelobladecard": "dev-master",
+        "careset/zermelobladegraph": "dev-master",
+        "careset/zermelobladetabular": "dev-master",
+        "careset/zermelobladetreecard": "dev-master",
         "fideloper/proxy": "~3.3",
+        "ftrotter/two-table-monolog-mysql": "dev-master",
         "laravel/framework": "5.5.*",
         "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4.0",
-        "mtdowling/cron-expression": "^1.2",
         "nesbot/carbon": "^1.22",
         "phpunit/phpunit": "^7.3",
         "proai/laravel-handlebars": "^1.7",
-        "smartystreets/phpsdk": "^4.7.0",
+        "pusher/pusher-php-server": "^4.0",
+        "smartystreets/phpsdk": "^4.5.7",
         "spatie/laravel-tail": "^2.0",
         "sunra/php-simple-html-dom-parser": "^1.5",
         "superbalist/flysystem-google-storage": "^7.0",
         "tymon/jwt-auth": "^0.5.12",
         "vlucas/phpdotenv": "^2.4",
+        "wamania/php-stemmer": "^1.2",
         "wrapi/slack": "^1.0"
     },
     "require-dev": {
         "careset/durc": "dev-master",
-        "careset/zermelo": "dev-master",
-        "careset/zermelobladecard": "dev-master",
-        "careset/zermelobladetabular": "dev-master",
         "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "~1.0"
