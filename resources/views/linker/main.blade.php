@@ -135,7 +135,6 @@ $('.{{$durc_tag_id}}').select2({
     	url: '/DURC/searchjson/{{$durc_type_tag}}/',
     	dataType: 'json'
   },
-    minimumInputLength: 3,
     templateResult: token_template,
     templateSelection: token_template,
     escapeMarkup: function(m) { return m; }	
