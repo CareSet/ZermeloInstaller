@@ -81,13 +81,13 @@ class GenericLinker extends Controller
 		}
 
 		$go_back_url  = "/genericLinkerForm/$durc_type_left/$durc_type_right/$durc_type_tag";
-
+		$view_all_url = "/Zermelo/DURC_$durc_type_left"."_$durc_type_right"."_$durc_type_tag";
+			
 		return view('linker.link_created',[
 			'total_links_created' => $total_links_created,
 			'go_back_url' => $go_back_url,
+			'view_all_url' => $view_all_url,
 		]);	
-
-
 
 	}
 
@@ -109,14 +109,14 @@ class GenericLinker extends Controller
 
 		$pdo = \DB::connection()->getPdo();
 
-                //Allow for a custom linker database...
-                $db = env('LINKER_DATABASE',false);
-                if(!$db){
-                        $db = env('DB_DATABASE');
-                }
-                $pdo->query("USE $db");
-
-
+		$db = \Config::get('database.connections.'.\Config::get('database.default').'.database');
+		//this returns null for some reason? But this is where this come from..
+		
+		//Allow for a custom linker database...
+		$db = env('LINKER_DATABASE',false);
+		if(!$db){
+			$db = env('DB_DATABASE');
+		}
 		$pdo->query("USE $db");
 
 
