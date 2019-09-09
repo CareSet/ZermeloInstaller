@@ -52,4 +52,24 @@ $app->singleton(
 |
 */
 
+$app->configureMonologUsing(function ($monolog) {
+
+        $pdo = \DB::connection()->getPdo();
+
+        //is there a log config set?
+        $db = env('LOG_DB',false);
+        if(!$db){
+                //guess not. lets us the default database for the app.
+                $db = env('DB_DATABASE');
+        }
+
+        $extra_fields = []; //this is not really nessecary anymore should redesign the logger not to use it..
+        //Create MysqlHandler
+        $mySQLHandler = new \TwoMySQLHandler\TwoMySQLHandler($pdo,$db, "log_message", "log_context", $extra_fields, \Monolog\Logger::WARNING);
+
+        $monolog->pushHandler($mySQLHandler);
+});
+
+
+
 return $app;
