@@ -63,6 +63,44 @@ $app->configureMonologUsing(function ($monolog) {
                 $db = env('DB_DATABASE');
         }
 
+	//TODO this should automatically create the log table.. but for now.. here they are: 
+
+/*
+
+CREATE TABLE `log_context` (
+  `id` bigint(20) NOT NULL,
+  `message_id` bigint(20) DEFAULT NULL,
+  `context_key` varchar(255) DEFAULT NULL,
+  `context_value` longtext DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE `log_message` (
+  `id` bigint(20) NOT NULL,
+  `channel` varchar(255) DEFAULT NULL,
+  `level` int(11) DEFAULT NULL,
+  `message` longtext DEFAULT NULL,
+  `created_at` datetime DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+ALTER TABLE `log_context`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `message_id` (`message_id`),
+  ADD KEY `context_key` (`context_key`);
+
+ALTER TABLE `log_message`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `channel` (`channel`),
+  ADD KEY `level` (`level`),
+  ADD KEY `created_at` (`created_at`);
+
+ALTER TABLE `log_context`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `log_message`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+*/
+
         $extra_fields = []; //this is not really nessecary anymore should redesign the logger not to use it..
         //Create MysqlHandler
         $mySQLHandler = new \TwoMySQLHandler\TwoMySQLHandler($pdo,$db, "log_message", "log_context", $extra_fields, \Monolog\Logger::WARNING);
