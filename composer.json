@@ -1,6 +1,6 @@
 {
-    "name": "careset/zermelo",	
-    "description": "Zermelo, a PHP reporting engine for Laravel",
+    "name": "careset/zermelo_installer",	
+    "description": "The installer package for Zermelo",
     "type": "library",
     "license": "Apache-2.0",
      "keywords": [
