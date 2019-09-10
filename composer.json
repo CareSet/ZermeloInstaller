@@ -1,0 +1,39 @@
+{
+    "name": "careset/zermelo",	
+    "description": "Zermelo, a PHP reporting engine for Laravel",
+    "type": "library",
+    "license": "Apache-2.0",
+     "keywords": [
+                "laravel",
+                "reporting",
+                "reports",
+		"report",
+		"datatables",
+		"d3",
+		"vega"
+    ],
+    "require": {
+        "php": ">=7.3.0",
+        "bestmomo/nice-artisan": "^1.1",
+        "careset/zermelo": "dev-master",
+        "careset/zermelobladecard": "dev-master",
+        "careset/zermelobladetabular": "dev-master",
+        "careset/zermelobladetreecard": "dev-master"
+    },
+    "autoload": {
+        "psr-4" : {
+            "CareSet\\Zermelo\\" : "src/CareSet/Zermelo"
+        }
+    },
+    "extra": {
+	    "laravel": {
+	        "providers": [
+	            "CareSet\\Zermelo\\ZermeloServiceProvider"
+	        ]
+	    }
+	},
+     "config": {
+        "sort-packages": true
+    }
+}
+
