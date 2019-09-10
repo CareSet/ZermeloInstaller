@@ -13,7 +13,7 @@ class ZermeloInstallerCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'install:chapple
+    protected $signature = 'install:zermelo
                     {--database= : Pass in the database name}
                     {--force : Overwrite existing views and database by default}';
 
