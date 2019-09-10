@@ -33,11 +33,12 @@ class ZermeloInstallerCommand extends Command
 
     public function handle()
     {
+        $force = $this->option('force');
         $this->info("Installing Zermelo API engine");
         foreach ($this->zermelo_install_commands as $zermelo_install_command) {
             if (array_has(Artisan::all(), $zermelo_install_command)) {
                 $this->info("Running `$zermelo_install_command`");
-                Artisan::call($zermelo_install_command, [], $this->getOutput());
+                Artisan::call($zermelo_install_command, ['--force' => $force], $this->getOutput());
             } else {
                 $this->line("$zermelo_install_command not available");
             }
