@@ -3,6 +3,8 @@
 namespace CareSet\ZermeloInstaller\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 class ZermeloInstallerCommand extends Command
 {
@@ -22,10 +24,23 @@ class ZermeloInstallerCommand extends Command
      */
     protected $description = 'Install all available zermelo packages';
 
+    protected $zermelo_install_commands = [
+        'install:zermelo_api',
+        'install:zermelobladetabular',
+        'install:zermelobladecard',
+        "install:zermelobladetree"
+    ];
+
     public function handle()
     {
         $this->info("Installing Zermelo API engine");
-        // Artisan::call('install:zermelobladegraph');
+        foreach ($this->zermelo_install_commands as $zermelo_install_command) {
+            if (array_has(Artisan::all(), $zermelo_install_command)) {
+                $this->info("Running `$zermelo_install_command`");
+                Artisan::call($zermelo_install_command, [], $this->getOutput());
+            } else {
+                $this->line("$zermelo_install_command not available");
+            }
+        }
     }
-
 }
