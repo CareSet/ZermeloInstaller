@@ -22,13 +22,13 @@
     },
     "autoload": {
         "psr-4" : {
-            "CareSet\\Zermelo\\" : "src/CareSet/Zermelo"
+            "CareSet\\ZermeloInstaller\\" : "src/"
         }
     },
     "extra": {
 	    "laravel": {
 	        "providers": [
-	            "CareSet\\Zermelo\\ZermeloServiceProvider"
+	            "CareSet\\ZermeloInstaller\\ServiceProvider"
 	        ]
 	    }
 	},
