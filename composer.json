@@ -13,7 +13,7 @@
 		"vega"
     ],
     "require": {
-        "php": ">=7.3.0",
+        "php": ">=7.2.0",
         "bestmomo/nice-artisan": "^1.1",
         "careset/zermelo": "dev-master",
         "careset/zermelobladecard": "dev-master",
