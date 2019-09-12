@@ -13,7 +13,7 @@ class ZermeloInstallerCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'install:zermelo
+    protected $signature = 'zermelo:install
                     {--database= : Pass in the database name}
                     {--force : Overwrite existing views and database by default}';
 
@@ -25,16 +25,17 @@ class ZermeloInstallerCommand extends Command
     protected $description = 'Install all available zermelo packages';
 
     protected $zermelo_install_commands = [
-        'install:zermelo_api',
-        'install:zermelobladetabular',
-        'install:zermelobladecard',
-        "install:zermelobladetree"
+        'zermelo:install_api',
+        'zermelo:install_zermelobladetabular',
+        'zermelo:install_zermelobladecard',
+        'zermelo:install_zermelobladetree'
     ];
 
     public function handle()
     {
         $force = $this->option('force');
         $this->info("Installing Zermelo API engine");
+
         foreach ($this->zermelo_install_commands as $zermelo_install_command) {
             if (array_has(Artisan::all(), $zermelo_install_command)) {
                 $this->info("Running `$zermelo_install_command`");
