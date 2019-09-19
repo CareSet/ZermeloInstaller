@@ -4,7 +4,6 @@ namespace CareSet\ZermeloInstaller\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
-use Symfony\Component\Console\Output\BufferedOutput;
 
 class ZermeloInstallerCommand extends Command
 {
