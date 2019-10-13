@@ -14,7 +14,6 @@
     ],
     "require": {
         "php": ">=7.2.0",
-        "bestmomo/nice-artisan": "^1.1",
         "careset/zermelo": "dev-master",
         "careset/zermelobladecard": "dev-master",
         "careset/zermelobladetabular": "dev-master",
