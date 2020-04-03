@@ -4,6 +4,7 @@ namespace CareSet\ZermeloInstaller\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Arr;
 
 class ZermeloInstallerCommand extends Command
 {
@@ -36,7 +37,7 @@ class ZermeloInstallerCommand extends Command
         $this->info("Installing Zermelo API engine");
 
         foreach ($this->zermelo_install_commands as $zermelo_install_command) {
-            if (array_has(Artisan::all(), $zermelo_install_command)) {
+            if (Arr::has(Artisan::all(), $zermelo_install_command)) {
                 $this->info("Running `$zermelo_install_command`");
                 Artisan::call($zermelo_install_command, ['--force' => $force], $this->getOutput());
             } else {
