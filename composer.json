@@ -1,5 +1,5 @@
 {
-    "name": "careset/zermelo_installer",	
+    "name": "careset/zermelo_installer",
     "description": "The installer package for Zermelo",
     "type": "library",
     "license": "Apache-2.0",
@@ -16,8 +16,7 @@
         "php": ">=7.2.0",
         "careset/zermelo": "dev-master",
         "careset/zermelobladecard": "dev-master",
-        "careset/zermelobladetabular": "dev-master",
-        "careset/zermelobladetreecard": "dev-master"
+        "careset/zermelobladetabular": "dev-master"
     },
     "autoload": {
         "psr-4" : {
