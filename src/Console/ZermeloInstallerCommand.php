@@ -28,7 +28,8 @@ class ZermeloInstallerCommand extends Command
         'zermelo:install_api',
         'zermelo:install_zermelobladetabular',
         'zermelo:install_zermelobladecard',
-        'zermelo:install_zermelobladetree'
+        'zermelo:install_zermelobladetreecard',
+        'zermelo:install_zermelobladegraph',
     ];
 
     public function handle()
