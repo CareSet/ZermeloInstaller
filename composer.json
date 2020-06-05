@@ -1,37 +1,38 @@
 {
-    "name": "careset/zermelo_installer",
-    "description": "The installer package for Zermelo",
-    "type": "library",
-    "license": "Apache-2.0",
-     "keywords": [
-                "laravel",
-                "reporting",
-                "reports",
-		"report",
-		"datatables",
-		"d3",
-		"vega"
-    ],
-    "require": {
-        "php": ">=7.2.0",
-        "careset/zermelo": "dev-master",
-        "careset/zermelobladecard": "dev-master",
-        "careset/zermelobladetabular": "dev-master"
-    },
-    "autoload": {
-        "psr-4" : {
-            "CareSet\\ZermeloInstaller\\" : "src/"
-        }
-    },
-    "extra": {
-	    "laravel": {
-	        "providers": [
-	            "CareSet\\ZermeloInstaller\\ServiceProvider"
-	        ]
-	    }
-	},
-     "config": {
-        "sort-packages": true
+  "name": "careset/zermelo_installer",
+  "description": "The installer package for Zermelo",
+  "type": "library",
+  "license": "Apache-2.0",
+  "keywords": [
+    "laravel",
+    "reporting",
+    "reports",
+    "report",
+    "datatables",
+    "d3",
+    "vega"
+  ],
+  "require": {
+    "php": ">=7.2.0",
+    "careset/zermelo": "dev-master",
+    "careset/zermelobladetabular": "dev-master",
+    "careset/zermelobladecard": "dev-master",
+    "careset/zermelobladetreecard": "dev-master",
+    "careset/zermelobladegraph": "dev-master"
+  },
+  "autoload": {
+    "psr-4" : {
+      "CareSet\\ZermeloInstaller\\" : "src/"
     }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "CareSet\\ZermeloInstaller\\ServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
 }
-
