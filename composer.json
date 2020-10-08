@@ -18,7 +18,8 @@
     "careset/zermelobladetabular": ">=0.9",
     "careset/zermelobladecard": ">=0.9",
     "careset/zermelobladetreecard": ">=0.9",
-    "careset/zermelobladegraph": ">=0.9"
+    "careset/zermelobladegraph": ">=0.9",
+    "doctrine/sql-formatter": "^1.1"
   },
   "autoload": {
     "psr-4" : {
