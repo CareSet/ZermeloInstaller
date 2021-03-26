@@ -14,11 +14,10 @@
   ],
   "require": {
     "php": ">=7.2.0",
-    "careset/zermelo": ">=0.9",
-    "careset/zermelobladetabular": ">=0.9",
-    "careset/zermelobladecard": ">=0.9",
-    "careset/zermelobladetreecard": ">=0.9",
-    "careset/zermelobladegraph": ">=0.9",
+    "careset/zermelo": "^1.0",
+    "careset/zermelobladetabular": "^1.0",
+    "careset/zermelobladecard": "^1.0",
+    "careset/zermelobladegraph": "^1.0",
     "doctrine/sql-formatter": "^1.1"
   },
   "autoload": {
